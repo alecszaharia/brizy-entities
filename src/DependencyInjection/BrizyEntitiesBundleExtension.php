@@ -15,7 +15,7 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
 {
     const ALIAS_NAME = 'brizy_entities';
     const DOCTRINE_MAPPING = 'brizy_entities.persistence.doctrine.mapping';
-    const DOCTRINE_MANAGER = 'brizy_entities.persistence.doctrine.mapping';
+    const DOCTRINE_MANAGER = 'brizy_entities.persistence.doctrine.entity_manager';
 
     public function getAlias()
     {
