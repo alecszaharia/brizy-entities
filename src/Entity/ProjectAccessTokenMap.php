@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Entity;
 
-use Brizy\Bundle\EntitiesBundle\Entity\Data;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
@@ -21,8 +20,6 @@ class ProjectAccessTokenMap
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     *
-     * @Groups({ WebhookConst::ENTITY_MESSAGE_GROUP })
      */
     protected $id;
 

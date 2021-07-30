@@ -429,4 +429,9 @@ class User implements UserInterface
     {
         return null;
     }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
+    }
 }

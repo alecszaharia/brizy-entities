@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundl\Repository;
+namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\MetafieldVarchar;
 use Doctrine\Common\Persistence\ManagerRegistry;

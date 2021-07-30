@@ -32,10 +32,10 @@ final class BrizyEntitiesBundle extends Bundle
     private function configureDoctrineExtension(ContainerBuilder $container): void
     {
         $namespaces = ['Brizy\Bundle\EntitiesBundle\Entity'];
-        $directories = [realpath(__DIR__ . '/src/Entity')];
-        $managerParameters = array();
-        $enabledParameter = false;
-        $aliasMap = array('BrizyEntitiesBundle' => 'Brizy\Bundle\EntitiesBundle\Entity');
+        $directories = [realpath(__DIR__ . '/Entity')];
+        $managerParameters = [BrizyEntitiesBundleExtension::DOCTRINE_MANAGER];
+        $enabledParameter = BrizyEntitiesBundleExtension::DOCTRINE_MAPPING;
+        $aliasMap = ['BrizyEntitiesBundle' => 'Brizy\Bundle\EntitiesBundle\Entity'];
 
         $container->addCompilerPass(
             DoctrineOrmMappingsPass::createAnnotationMappingDriver(

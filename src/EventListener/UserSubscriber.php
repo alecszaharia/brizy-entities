@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener;
+namespace Brizy\Bundle\EntitiesBundle\EventListener;
 
-use App\Entity\User;
-use App\Security\OAuth\Grant\UserClientCredentialsGrant;
-use App\Utils\Random;
+use Brizy\Bundle\EntitiesBundle\Entity\User;
+use Brizy\Bundle\EntitiesBundle\Utils\Random;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -78,7 +77,7 @@ class UserSubscriber implements EventSubscriber
             new Scope('user')
         );
         $client->setGrants(
-            new Grant(UserClientCredentialsGrant::USER_CLIENT_CREDENTIALS),
+            new Grant('user_client_credentials'),
             new Grant(OAuth2Grants::REFRESH_TOKEN)
         );
         $client->setRedirectUris(new RedirectUri('https://unknown/'.md5((string) time()))); // random URL to pass the client validation

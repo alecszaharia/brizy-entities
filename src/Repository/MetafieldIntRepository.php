@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Repository;
 
-use Brizy\Bundle\EntitiesBundl\Repository\MetafieldValueRepository;
 use Brizy\Bundle\EntitiesBundle\Entity\MetafieldInt;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

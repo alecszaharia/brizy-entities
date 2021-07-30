@@ -22,10 +22,10 @@ abstract class MetafieldBase implements MetaFieldTypeInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Metafield")
+     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Metafield")
      * @ORM\JoinColumn(name="metafield_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected Metafield $metafield;

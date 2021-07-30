@@ -13,7 +13,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Role[]    findAll()
  * @method Role[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RoleRepository extends Common\EntityRepository
+class RoleRepository extends EntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

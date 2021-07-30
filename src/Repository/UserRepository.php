@@ -14,7 +14,7 @@ use Doctrine\ORM\AbstractQuery;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends Common\EntityRepository
+class UserRepository extends EntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
