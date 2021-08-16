@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Brizy\Bundle\EntitiesBundle\Command;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Application;
@@ -9,39 +10,28 @@ use Brizy\Bundle\EntitiesBundle\Entity\DataUserRole;
 use Brizy\Bundle\EntitiesBundle\Entity\Node;
 use Brizy\Bundle\EntitiesBundle\Entity\Role;
 use Brizy\Bundle\EntitiesBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+
 
 class CreateUserCommand extends Command
 {
     protected static $defaultName = 'app:create-dev-user';
 
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * CreateUserCommand constructor.
-     */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        parent::__construct();
-
-        $this->entityManager = $entityManager;
-    }
+    protected $entityManager = null;
 
     protected function configure()
     {
         $this->setDescription('Create users for development')->setHidden(true);
+        $this->addOption('em', null, InputOption::VALUE_OPTIONAL, 'The entity manager to use for this command');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->entityManager = $this->getEntityManager($input->getOption('em'));
         $io = new SymfonyStyle($input, $output);
 
         $user = new User();
@@ -120,6 +110,8 @@ class CreateUserCommand extends Command
         $application->setApiKey('asdasdasdasd');
         $application->setSecret('asdasdasdasd');
         $application->setClientId('asdasdasdasd');
+        $application->setCreatedAt(new \DateTime());
+        $application->setUpdatedAt(new \DateTime());
 
         $this->entityManager->persist($application);
 
@@ -154,6 +146,7 @@ class CreateUserCommand extends Command
         $user_role->setRoleUid($this->createRole()->getUid());
         $user_role->setStatus(DataUserRole::STATUS_APPROVED);
 
+
         $this->entityManager->persist($user_role);
 
         return $data;
@@ -187,4 +180,10 @@ class CreateUserCommand extends Command
 
         return $role;
     }
+
+    protected function getEntityManager(string $em) {
+        return $this->getApplication()->getKernel()->getContainer()->get('doctrine')->getManager($em);
+    }
+
+
 }
