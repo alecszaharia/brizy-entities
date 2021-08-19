@@ -45,7 +45,28 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('oauth2')
+                    ->children()
+                        ->scalarNode('scopes')
+                        ->treatNullLike([])
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
+
+        return $node;
+    }
+
+    private function createScopesNode(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('scopes');
+        $node = $treeBuilder->getRootNode();
+
+        $node
+            ->info("Scopes that you wish to utilize in your application.\nThis should be a simple array of strings.")
+            ->scalarPrototype()
+            ->treatNullLike([])
+        ;
 
         return $node;
     }

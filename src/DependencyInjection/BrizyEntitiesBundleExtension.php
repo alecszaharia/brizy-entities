@@ -45,7 +45,7 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
     private function prependTrikoderConfiguration(ContainerBuilder $container, $mainConfig, $trikoderConfig)
     {
         $managerName = $mainConfig['persistence']['doctrine']['entity_manager']['name'];
-
+        $scopes = $mainConfig['persistence']['oauth2']['scopes'];
         $container->setParameter(self::DOCTRINE_MAPPING, true);
         $container->setParameter(self::DOCTRINE_MANAGER, $managerName);
 
@@ -59,7 +59,7 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
                     'refresh_token_ttl' => '%env(OAUTH2_REFRESH_TOKEN_TTL)%'
                 ],
             'resource_server' => ['public_key' => '%env(OAUTH2_PUBLIC_KEY_PATH)%'],
-            'scopes' => [],
+            'scopes' => $scopes,
             'persistence' => ['doctrine' => ['entity_manager' => $managerName]]
         ];
 

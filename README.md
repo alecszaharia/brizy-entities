@@ -23,6 +23,8 @@ Problems:
 
 ## Install and Configure
 
+0. Install and configure stof/doctrine-extensions-bundle with timestampable: true for the entity manager used
+
 1. Add repository in composer:
 
     ```yaml
@@ -110,7 +112,7 @@ Problems:
                             is_bundle: false
                             type: annotation
                             dir: '%kernel.project_dir%/src/Entity'
-                            prefix: 'App\Entity'
+                            prefix: 'Brizy\Bundle\EntitiesBundle\Entity'
                             alias: App
                 authorize:
                     connection: authorize

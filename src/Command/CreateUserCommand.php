@@ -4,17 +4,28 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Command;
 
+use App\Security\OAuth\Grant\AppClientCredentialsGrant;
+use App\Security\ProjectScope;
 use Brizy\Bundle\EntitiesBundle\Entity\Application;
 use Brizy\Bundle\EntitiesBundle\Entity\Data;
 use Brizy\Bundle\EntitiesBundle\Entity\DataUserRole;
 use Brizy\Bundle\EntitiesBundle\Entity\Node;
+use Brizy\Bundle\EntitiesBundle\Entity\ProjectAccessTokenMap;
 use Brizy\Bundle\EntitiesBundle\Entity\Role;
 use Brizy\Bundle\EntitiesBundle\Entity\User;
+use Brizy\Bundle\EntitiesBundle\Tests\Factory\AccessTokenFactory;
+use Brizy\Bundle\EntitiesBundle\Utils\Random;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
+use Trikoder\Bundle\OAuth2Bundle\Model\Client;
+use Trikoder\Bundle\OAuth2Bundle\Model\Grant;
+use Trikoder\Bundle\OAuth2Bundle\Model\RedirectUri;
+use Trikoder\Bundle\OAuth2Bundle\Model\Scope;
+use Trikoder\Bundle\OAuth2Bundle\OAuth2Grants;
 
 
 class CreateUserCommand extends Command
@@ -32,40 +43,63 @@ class CreateUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->entityManager = $this->getEntityManager($input->getOption('em'));
-        $io = new SymfonyStyle($input, $output);
+        $io                  = new SymfonyStyle($input, $output);
 
         $user = new User();
         $user->setApplication($this->createApplication());
         $user->setUserRemoteId(rand(1, 999));
-        $user->setNode(
-            $this->createNode(['slug' => 'user', 'name' => 'User', 'class' => User::class])
-        );
+        $user->setNode($this->createNode(['slug' => 'user', 'name' => 'User', 'class' => User::class]));
         $user->setCreatedAt(new \DateTime());
         $user->setUpdatedAt(new \DateTime());
         $user->setLocked(false);
         $user->setApproved(true);
-
         $this->entityManager->persist($user);
 
-        $project = $this->createProject($user);
+        // generate user access token
+        $accessToken = new AccessToken(
+            md5(random_bytes(32)),
+            (new \DateTimeImmutable())->modify('+1 day'),
+            $user->getCmsApiClient(),
+            (string)$user->getId(),
+            ['user']
+        );
+
+        $this->entityManager->persist($accessToken);
+
+        list($project, $projectAccessToken) = $this->createProject($user);
 
         $this->entityManager->flush();
 
-        $io->success('The user has been successfully created.');
-
-        $userData = [];
-        $userData['user_id'] = $user->getId();
-        $userData['project_id'] = $project->getId();
-        $userData['cms_client_id'] = $user->getCmsApiClient()->getIdentifier();
-        $userData['cms_client_secret'] = $user->getCmsApiClient()->getSecret();
+        $userData                         = [];
+        $userData['user_id']              = $user->getId();
+        $userData['project_id']           = $project->getId();
+        $userData['cms_client_id']        = $user->getCmsApiClient()->getIdentifier();
+        $userData['cms_client_secret']    = $user->getCmsApiClient()->getSecret();
+        $userData['user_oauth2_token']    = [
+            [
+                'scopes'     => ['user'],
+                'token'      => AccessTokenFactory::generateJwtToken($accessToken),
+                'user_id'    => $user->getId(),
+                'project_id' => $project->getId(),
+            ],
+        ];
+        $userData['project_oauth2_token'] = [
+            [
+                'scopes'     => ['project'],
+                'token'      => AccessTokenFactory::generateJwtToken($projectAccessToken),
+                'user_id'    => $user->getId(),
+                'project_id' => $project->getId(),
+            ],
+        ];
 
         foreach ($user->getCmsApiClient()->getGrants() as $grant) {
-            $userData['cms_client_grant_types'][] = (string) $grant;
+            $userData['cms_client_grant_types'][] = (string)$grant;
         }
         foreach ($user->getCmsApiClient()->getScopes() as $scope) {
-            $userData['cms_client_scopes'][] = (string) $scope;
+            $userData['cms_client_scopes'][] = (string)$scope;
         }
 
+        $io->success('The user has been successfully created.');
         $io->writeln(json_encode($userData, JSON_PRETTY_PRINT));
 
         return Command::SUCCESS;
@@ -110,8 +144,6 @@ class CreateUserCommand extends Command
         $application->setApiKey('asdasdasdasd');
         $application->setSecret('asdasdasdasd');
         $application->setClientId('asdasdasdasd');
-        $application->setCreatedAt(new \DateTime());
-        $application->setUpdatedAt(new \DateTime());
 
         $this->entityManager->persist($application);
 
@@ -146,10 +178,41 @@ class CreateUserCommand extends Command
         $user_role->setRoleUid($this->createRole()->getUid());
         $user_role->setStatus(DataUserRole::STATUS_APPROVED);
 
-
         $this->entityManager->persist($user_role);
 
-        return $data;
+
+        // create project client
+        $client = new Client(Random::generateOauthClientIdentifier(), Random::generateOauthClientSecret());
+        $client->setScopes(new Scope('project'));
+        $client->setGrants(
+            new Grant('app_client_credentials'),
+            new Grant(OAuth2Grants::REFRESH_TOKEN)
+        );
+
+        $client->setRedirectUris(new RedirectUri('https://random.url'));
+        $client->setActive(true);
+
+        $this->entityManager->persist($client);
+
+        // assign oauth client to project
+        // this is a bit of a hack as the token for the project must be assigned
+        // by installing a cms_application to this project
+
+        // generate user access token
+        $accessToken = new AccessToken(
+            md5(random_bytes(32)),
+            (new \DateTimeImmutable())->modify('+1 day'),
+            $user->getCmsApiClient(),
+            (string)$user->getId(),
+            ['user']
+        );
+
+        $this->entityManager->persist($accessToken);
+        $tokenModel = $this->entityManager->getRepository(AccessToken::class)->find($accessToken->getIdentifier());
+        $map        = new ProjectAccessTokenMap($data, $tokenModel);
+        $this->entityManager->persist($map);
+
+        return [$data, $accessToken];
     }
 
     /**
@@ -181,8 +244,9 @@ class CreateUserCommand extends Command
         return $role;
     }
 
-    protected function getEntityManager(string $em) {
-        return $this->getApplication()->getKernel()->getContainer()->get('doctrine')->getManager($em);
+    protected function getEntityManager(string $emName)
+    {
+        return $this->getApplication()->getKernel()->getContainer()->get('doctrine')->getManager($emName);
     }
 
 
