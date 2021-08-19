@@ -49,6 +49,7 @@ final class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->children()
                         ->arrayNode('scopes')
+                        ->prototype('scalar')
                         ->treatNullLike([])
                         ->end()
                     ->end()

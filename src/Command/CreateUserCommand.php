@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Command;
 
-use App\Security\OAuth\Grant\AppClientCredentialsGrant;
-use App\Security\ProjectScope;
 use Brizy\Bundle\EntitiesBundle\Entity\Application;
 use Brizy\Bundle\EntitiesBundle\Entity\Data;
 use Brizy\Bundle\EntitiesBundle\Entity\DataUserRole;
@@ -13,7 +11,7 @@ use Brizy\Bundle\EntitiesBundle\Entity\Node;
 use Brizy\Bundle\EntitiesBundle\Entity\ProjectAccessTokenMap;
 use Brizy\Bundle\EntitiesBundle\Entity\Role;
 use Brizy\Bundle\EntitiesBundle\Entity\User;
-use Brizy\Bundle\EntitiesBundle\Tests\Factory\AccessTokenFactory;
+use Brizy\Bundle\EntitiesBundle\Factory\AccessTokenFactory;
 use Brizy\Bundle\EntitiesBundle\Utils\Random;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,6 +36,7 @@ class CreateUserCommand extends Command
     {
         $this->setDescription('Create users for development')->setHidden(true);
         $this->addOption('em', null, InputOption::VALUE_OPTIONAL, 'The entity manager to use for this command');
+        $this->addOption('key', null, InputOption::VALUE_REQUIRED, 'The private key path use tot generate the jwt tokens');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -78,7 +77,7 @@ class CreateUserCommand extends Command
         $userData['user_oauth2_token']    = [
             [
                 'scopes'     => ['user'],
-                'token'      => AccessTokenFactory::generateJwtToken($accessToken),
+                'token'      => AccessTokenFactory::generateJwtToken($accessToken,$input->getOption('key')),
                 'user_id'    => $user->getId(),
                 'project_id' => $project->getId(),
             ],
@@ -86,7 +85,7 @@ class CreateUserCommand extends Command
         $userData['project_oauth2_token'] = [
             [
                 'scopes'     => ['project'],
-                'token'      => AccessTokenFactory::generateJwtToken($projectAccessToken),
+                'token'      => AccessTokenFactory::generateJwtToken($projectAccessToken,$input->getOption('key')),
                 'user_id'    => $user->getId(),
                 'project_id' => $project->getId(),
             ],
