@@ -24,7 +24,7 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
 
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
@@ -45,22 +45,22 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
     private function prependTrikoderConfiguration(ContainerBuilder $container, $mainConfig, $trikoderConfig)
     {
         $managerName = $mainConfig['persistence']['doctrine']['entity_manager']['name'];
-        $scopes = $mainConfig['persistence']['oauth2']['scopes'];
+        $scopes      = $mainConfig['persistence']['oauth2']['scopes'];
         $container->setParameter(self::DOCTRINE_MAPPING, true);
         $container->setParameter(self::DOCTRINE_MANAGER, $managerName);
 
         $trikoderConfig = [
             'authorization_server' =>
                 [
-                    'private_key' => '%env(OAUTH2_PRIVATE_KEY_PATH)%',
+                    'private_key'            => '%env(OAUTH2_PRIVATE_KEY_PATH)%',
                     'private_key_passphrase' => '%env(OAUTH2_KEY_PASSPHRASE)%',
-                    'encryption_key' => '%env(OAUTH2_ENCRYPTION_KEY)%',
-                    'access_token_ttl' => '%env(OAUTH2_ACCESS_TOKEN_TTL)%',
-                    'refresh_token_ttl' => '%env(OAUTH2_REFRESH_TOKEN_TTL)%'
+                    'encryption_key'         => '%env(OAUTH2_ENCRYPTION_KEY)%',
+                    'access_token_ttl'       => '%env(OAUTH2_ACCESS_TOKEN_TTL)%',
+                    'refresh_token_ttl'      => '%env(OAUTH2_REFRESH_TOKEN_TTL)%',
                 ],
-            'resource_server' => ['public_key' => '%env(OAUTH2_PUBLIC_KEY_PATH)%'],
-            'scopes' => $scopes,
-            'persistence' => ['doctrine' => ['entity_manager' => $managerName]]
+            'resource_server'      => ['public_key' => '%env(OAUTH2_PUBLIC_KEY_PATH)%'],
+            'scopes'               => $scopes,
+            'persistence'          => ['doctrine' => ['entity_manager' => $managerName]],
         ];
 
         $container->prependExtensionConfig('trikoder_oauth2', $trikoderConfig);
