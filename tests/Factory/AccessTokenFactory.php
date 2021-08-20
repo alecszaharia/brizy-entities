@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
-use Brizy\Bundle\EntitiesBundle\Tests\TestContainer;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
 
 class AccessTokenFactory
@@ -22,7 +22,7 @@ class AccessTokenFactory
      *
      * @throws \Exception
      */
-    public static function createForProject(TestContainer $container, array $params = [])
+    public static function createForProject(TestContainerInterface $container, array $params = [])
     {
         return \Brizy\Bundle\EntitiesBundle\Factory\AccessTokenFactory::createForProject($container->manager(),$params);
     }
@@ -32,14 +32,14 @@ class AccessTokenFactory
      *
      * @throws \Exception
      */
-    public static function createForUser(TestContainer $container, array $params = [])
+    public static function createForUser(TestContainerInterface $container, array $params = [])
     {
         return \Brizy\Bundle\EntitiesBundle\Factory\AccessTokenFactory::createForUser($container->manager(),$params);
     }
 
-    public static function generateJwtToken(AccessToken $accessToken): string
+    public static function generateJwtToken(AccessToken $accessToken,$keyPath=null): string
     {
-        $keyPath = getenv(self::OAUTH2_PRIVATE_KEY_PATH);
-        return \Brizy\Bundle\EntitiesBundle\Factory\AccessTokenFactory::generateJwtToken($accessToken,$keyPath);
+        $key = $keyPath ?? getenv(self::OAUTH2_PRIVATE_KEY_PATH);
+        return \Brizy\Bundle\EntitiesBundle\Factory\AccessTokenFactory::generateJwtToken($accessToken,$key);
     }
 }

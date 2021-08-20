@@ -32,7 +32,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Brizy\\Bundle\\EntitiesBundle\\": "src/"
+      "Brizy\\Bundle\\EntitiesBundle\\": "src/",
+      "Brizy\\Bundle\\EntitiesBundle\\TestFactory\\": "tests/Factory/"
     },
     "exclude-from-classmap": [
       "/Tests/"
@@ -41,7 +42,10 @@
   "autoload-dev": {
     "psr-4": {
       "Brizy\\Bundle\\EntitiesBundle\\Tests\\": "tests/"
-    }
+    },
+    "exclude-from-classmap": [
+      "/Factory/"
+    ]
   },
   "repositories": [
     {

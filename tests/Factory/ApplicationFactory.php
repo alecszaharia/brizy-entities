@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Application;
-use Brizy\Bundle\EntitiesBundle\Tests\TestContainer;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 
 class ApplicationFactory implements FactoryInterface
 {
@@ -16,7 +16,7 @@ class ApplicationFactory implements FactoryInterface
     public const CLIENT_ID = 'cliend_id';
     public const SCOPE = 'scope';
 
-    public static function create(TestContainer $container, array $params = []): Application
+    public static function create(TestContainerInterface $container, array $params = []): Application
     {
         $application = new Application();
         $application->setName($params[self::NAME] ?? $container->faker()->word);

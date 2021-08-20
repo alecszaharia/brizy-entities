@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Metafield;
-use Brizy\Bundle\EntitiesBundle\Tests\TestContainer;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 
 class MetaFieldFactory implements FactoryInterface
 {
@@ -15,7 +15,7 @@ class MetaFieldFactory implements FactoryInterface
     public const VALUE = 'value';
     public const WITHOUT_VALUE = 'withoutValue';
 
-    public static function create(TestContainer $container, array $params = [])
+    public static function create(TestContainerInterface $container, array $params = [])
     {
         $metafield = new Metafield();
         $project = $params[self::PROJECT] ?? DataFactory::create($container);

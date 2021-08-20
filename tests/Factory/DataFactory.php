@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Data;
-use Brizy\Bundle\EntitiesBundle\Tests\TestContainer;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 
 class DataFactory implements FactoryInterface
 {
     public const AUTHOR = 'author';
     public const NODE = 'node';
 
-    public static function create(TestContainer $container, array $params = [])
+    public static function create(TestContainerInterface $container, array $params = [])
     {
         $author = $params[self::AUTHOR] ?? UserFactory::create($container);
 

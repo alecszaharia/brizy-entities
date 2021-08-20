@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Faker\Generator as Faker;
 
-class TestContainer
+class TestContainer implements TestContainerInterface
 {
     private ObjectManager $manager;
     private Faker $faker;

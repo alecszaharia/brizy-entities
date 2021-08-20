@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
+use Brizy\Bundle\EntitiesBundle\Entity\DataUserRole;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 use Exception;
+use Faker\Generator;
 
 class DataUserRoleFactory implements FactoryInterface
 {
@@ -18,7 +21,7 @@ class DataUserRoleFactory implements FactoryInterface
      *
      * @throws Exception
      */
-    public static function create(TestContainer $container, array $params = [], Generator $faker = null)
+    public static function create(TestContainerInterface $container, array $params = [], Generator $faker = null)
     {
         if (!isset($params[self::CONTAINER])) {
             throw new Exception('Unable to create DataUserRole without a project instance');

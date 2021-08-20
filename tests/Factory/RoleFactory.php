@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Role;
-use Brizy\Bundle\EntitiesBundle\Tests\TestContainer;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 use Faker\Generator;
 
 class RoleFactory implements FactoryInterface
@@ -21,7 +21,7 @@ class RoleFactory implements FactoryInterface
      *
      * @throws \Exception
      */
-    public static function create(TestContainer $container, array $params = [], Generator $faker = null)
+    public static function create(TestContainerInterface $container, array $params = [], Generator $faker = null)
     {
         if (!isset($params[self::NAME])) {
             throw new \Exception('Please provide a role name');

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Brizy\Bundle\EntitiesBundle\Tests\Factory;
+namespace Brizy\Bundle\EntitiesBundle\TestFactory;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Node;
-use Brizy\Bundle\EntitiesBundle\Tests\TestContainer;
+use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 
 class NodeFactory implements FactoryInterface
 {
@@ -13,7 +13,7 @@ class NodeFactory implements FactoryInterface
     public const SLUG = 'slug';
     public const CLASS_NAME = 'class_name';
 
-    public static function create(TestContainer $container, array $params = [])
+    public static function create(TestContainerInterface $container, array $params = [])
     {
         $node = new Node();
         $node->setName($params[self::NAME] ?? $container->faker()->unique()->words(5, true));
