@@ -203,7 +203,7 @@ class CreateUserCommand extends Command
             (new \DateTimeImmutable())->modify('+1 day'),
             $user->getCmsApiClient(),
             (string)$user->getId(),
-            ['user']
+            ['project']
         );
 
         $this->entityManager->persist($accessToken);
