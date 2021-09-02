@@ -12,7 +12,7 @@
     "doctrine/annotations": "^1.0",
     "doctrine/doctrine-bundle": "^1.8|^2.3",
     "symfony/framework-bundle": "^4.4|^5.0",
-    "symfony/yaml": "^5.2",
+    "symfony/yaml": "^5.1",
     "symfony/validator": "^5.1",
     "trikoder/oauth2-bundle": "^3.2",
     "gedmo/doctrine-extensions": "^3.0.4",
