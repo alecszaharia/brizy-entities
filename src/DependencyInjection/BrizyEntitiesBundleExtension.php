@@ -52,13 +52,13 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
         $trikoderConfig = [
             'authorization_server' =>
                 [
-                    'private_key'            => '%env(OAUTH2_PRIVATE_KEY_PATH)%',
+                    'private_key'            => '%env(multiline:resolve:OAUTH2_PRIVATE_KEY_PATH)%',
                     'private_key_passphrase' => '%env(OAUTH2_KEY_PASSPHRASE)%',
                     'encryption_key'         => '%env(OAUTH2_ENCRYPTION_KEY)%',
                     'access_token_ttl'       => '%env(OAUTH2_ACCESS_TOKEN_TTL)%',
                     'refresh_token_ttl'      => '%env(OAUTH2_REFRESH_TOKEN_TTL)%',
                 ],
-            'resource_server'      => ['public_key' => '%env(OAUTH2_PUBLIC_KEY_PATH)%'],
+            'resource_server'      => ['public_key' => '%env(multiline:resolve:OAUTH2_PUBLIC_KEY_PATH)%'],
             'scopes'               => $scopes,
             'persistence'          => ['doctrine' => ['entity_manager' => $managerName]],
         ];
