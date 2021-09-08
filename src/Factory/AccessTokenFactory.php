@@ -99,7 +99,7 @@ class AccessTokenFactory
         return $accessToken;
     }
 
-    public static function generateJwtToken(AccessToken $accessToken,$keyPath): string
+    public static function generateJwtToken(AccessToken $accessToken, $keyPath): string
     {
         $clientEntity = new ClientEntity();
         $clientEntity->setIdentifier($accessToken->getClient()->getIdentifier());
