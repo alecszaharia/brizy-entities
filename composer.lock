@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31333d51c2cb80969de5490dd48c2ec7",
+    "content-hash": "aeed8b7660aa722bfedbcce1d30a91f2",
     "packages": [
         {
             "name": "alecszaharia/pre-commit-php-cs-fixer",
@@ -9391,7 +9391,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4",
+        "php": ">7.4",
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-iconv": "*",
