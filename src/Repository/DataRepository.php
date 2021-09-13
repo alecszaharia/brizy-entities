@@ -8,7 +8,7 @@ use Brizy\Bundle\EntitiesBundle\Entity\Data;
 use Brizy\Bundle\EntitiesBundle\Entity\DataUserRole;
 use Brizy\Bundle\EntitiesBundle\Entity\Node;
 use Brizy\Bundle\EntitiesBundle\Entity\ProjectAccessTokenMap;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\AbstractQuery;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
 
@@ -23,7 +23,7 @@ class DataRepository extends EntityRepository
     /**
      * DataRepository constructor.
      */
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(Registry $registry)
     {
         parent::__construct($registry, Data::class);
     }
