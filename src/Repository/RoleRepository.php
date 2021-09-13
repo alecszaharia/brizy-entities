@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Role;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Role|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,7 +15,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class RoleRepository extends EntityRepository
 {
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Role::class);
     }

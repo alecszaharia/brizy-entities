@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,7 +16,7 @@ use Doctrine\ORM\AbstractQuery;
  */
 class UserRepository extends EntityRepository
 {
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }

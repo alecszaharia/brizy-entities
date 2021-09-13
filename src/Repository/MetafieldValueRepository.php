@@ -6,12 +6,11 @@ namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Common\MetafieldBase;
 use Brizy\Bundle\EntitiesBundle\Entity\Metafield;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Persistence\ManagerRegistry;
 
 abstract class MetafieldValueRepository extends EntityRepository
 {
-    public function __construct(Registry $registry, string $entityClass)
+    public function __construct(ManagerRegistry $registry, string $entityClass)
     {
         parent::__construct($registry, $entityClass);
     }

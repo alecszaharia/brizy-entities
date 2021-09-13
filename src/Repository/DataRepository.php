@@ -10,6 +10,7 @@ use Brizy\Bundle\EntitiesBundle\Entity\Node;
 use Brizy\Bundle\EntitiesBundle\Entity\ProjectAccessTokenMap;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\Persistence\ManagerRegistry;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
 
 /**
@@ -23,7 +24,7 @@ class DataRepository extends EntityRepository
     /**
      * DataRepository constructor.
      */
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Data::class);
     }

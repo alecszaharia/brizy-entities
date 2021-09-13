@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\Revision;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Gedmo\Loggable\Entity\Repository\LogEntryRepository;
 
 /**
@@ -17,7 +16,7 @@ use Gedmo\Loggable\Entity\Repository\LogEntryRepository;
  */
 class RevisionRepository extends LogEntryRepository
 {
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Revision::class);
     }
