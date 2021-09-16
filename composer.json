@@ -17,8 +17,7 @@
     "trikoder/oauth2-bundle": "^3.2",
     "gedmo/doctrine-extensions": "^3.0.4",
     "bagrinsergiu/base64-encoded-file": "dev-master",
-    "nyholm/psr7": "^1.4",
-    "alecszaharia/pre-commit-php-cs-fixer": "^1"
+    "nyholm/psr7": "^1.4"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.9",
