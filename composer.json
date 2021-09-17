@@ -16,8 +16,8 @@
     "symfony/validator": "^5.3",
     "trikoder/oauth2-bundle": "^3.2",
     "gedmo/doctrine-extensions": "^3.0.4",
-    "bagrinsergiu/base64-encoded-file": "dev-master",
-    "nyholm/psr7": "^1.4"
+    "nyholm/psr7": "^1.4",
+    "hshn/base64-encoded-file": "^3.0"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.9",
@@ -47,10 +47,6 @@
     ]
   },
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/bagrinsergiu/base64-encoded-file.git"
-    },
     {
       "type": "vcs",
       "url": "https://github.com/bagrinsergiu/DoctrineExtensions.git"
