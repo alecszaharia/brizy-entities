@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\User;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
+use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -44,5 +46,22 @@ class UserRepository extends EntityRepository
                           ->where('u.id=:user_id and u.locked=false')
                           ->setParameter('user_id', $userId)
                           ->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
+    }
+
+    public function getUserByAccessTokenIdentifier(string $identifier): ?User
+    {
+        $result = $this->createQueryBuilder('u')
+            ->join(
+                AccessToken::class,
+                'at',
+                'WITH',
+                'at.identifier=:identifier'
+            )
+            ->setParameter('identifier', $identifier, Type::STRING)
+            ->where('u.cms_api_client = at.client')
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_OBJECT);
+
+        return $result;
     }
 }
