@@ -33,10 +33,6 @@ Problems:
         {
           "type": "vcs",
           "url": "https://github.com/alecszaharia/brizy-entities.git"
-        },
-        {
-          "type": "vcs",
-          "url": "https://github.com/bagrinsergiu/base64-encoded-file.git"
         }
       ]
     }
@@ -51,34 +47,14 @@ Problems:
 3. Add in config/bundles.php: 
    ```php
    Trikoder\Bundle\OAuth2Bundle\TrikoderOAuth2Bundle::class => ['all' => true],
-   Brizy\Bundle\EntitiesBundle\EntitiesBundle::class => ['all' => true]
+   Brizy\Bundle\EntitiesBundle\BrizyEntitiesBundle::class => ['all' => true]
    ```
-4. Create bundle config: config/packeges/brizy_entities.yaml
-    ```yaml
-    brizy_entities:
-      persistence:
-        doctrine:
-          entity_manager:
-            name: {entity_manager_name|default}
-    ```
-5. Generate or set the public key
-   ```shell
-   mkdir -p var/oauth
-   cd var/oauth
-   openssl genrsa -out key.pem 1024
-   openssl rsa -in key.pem -pubout > key.pub
+4. Add the following line to .env files and configure it
+   ```dotenv
+   AUTHORIZE_DATABASE_URL=mysql://root:nopassword@mysql:3306/authorization_db?serverVersion=8
    ```
-6. Add in .env file the following env vars 
-    ```dotenv
-    OAUTH2_PRIVATE_KEY_PATH="var/oauth/key.pem"
-    OAUTH2_PUBLIC_KEY_PATH="var/oauth/key.pub"
-    OAUTH2_KEY_PASSPHRASE=""
-    OAUTH2_ENCRYPTION_KEY=""
-    OAUTH2_ACCESS_TOKEN_TTL=""
-    OAUTH2_REFRESH_TOKEN_TTL=""
-    ```
 
-7. Configure a separate doctrine connection and entity manager to handle the brizy entitites.
+6. Configure a separate doctrine connection and entity manager to handle the brizy entitites.
    This way we make sure that all brizy entities are not going to be create in the service's database.
    ```yaml
     doctrine:
@@ -112,16 +88,41 @@ Problems:
                             is_bundle: false
                             type: annotation
                             dir: '%kernel.project_dir%/src/Entity'
-                            prefix: 'Brizy\Bundle\EntitiesBundle\Entity'
+                            prefix: 'App\Entity'
                             alias: App
                 authorize:
                     connection: authorize
                     # make sure that you use the correct naming_strategy as the one used on the AUTHORIZE_DATABASE
                     naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
    ```
-   
-   WARNING: Notice the `auto_mapping: false` on the default entity manager. 
-   
+
+   WARNING: Notice the `auto_mapping: false` on the default entity manager.
+
    Setting this to false will make the doctrine map only the mapping defined in this config.
-   
-   It will not automatically map any bundle that have entities mapped
+
+   It will not automatically map any bundle that have entities mapped.
+
+7. Create bundle config: config/packages/brizy_entities.yaml
+    ```yaml
+    brizy_entities:
+      persistence:
+        doctrine:
+          entity_manager:
+            name: authorize
+    ```
+8. Generate or set the public key
+   ```shell
+   mkdir -p var/oauth
+   cd var/oauth
+   openssl genrsa -out key.pem 1024
+   openssl rsa -in key.pem -pubout > key.pub
+   ```
+9. Add in .env file the following env vars 
+    ```dotenv
+    OAUTH2_PRIVATE_KEY_PATH="var/oauth/key.pem"
+    OAUTH2_PUBLIC_KEY_PATH="var/oauth/key.pub"
+    OAUTH2_KEY_PASSPHRASE=""
+    OAUTH2_ENCRYPTION_KEY=""
+    OAUTH2_ACCESS_TOKEN_TTL=""
+    OAUTH2_REFRESH_TOKEN_TTL=""
+    ```
