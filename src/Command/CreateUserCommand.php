@@ -56,7 +56,7 @@ class CreateUserCommand extends Command
         // generate user access token
         $accessToken = new AccessToken(
             md5(random_bytes(32)),
-            (new \DateTimeImmutable())->modify('+1 day'),
+            (new \DateTimeImmutable())->modify('+3 months'),
             $user->getCmsApiClient(),
             (string) $user->getId(),
             ['user']
