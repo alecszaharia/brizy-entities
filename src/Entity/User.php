@@ -419,6 +419,10 @@ class User implements UserInterface
         return null;
     }
 
+    public function getUserIdentifier() {
+        return $this->getId();
+    }
+
     /**
      * Removes sensitive data from the user.
      *
