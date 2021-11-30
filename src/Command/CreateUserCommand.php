@@ -53,6 +53,8 @@ class CreateUserCommand extends Command
         $user->setApproved(true);
         $this->entityManager->persist($user);
 
+        $this->entityManager->flush();
+
         // generate user access token
         $accessToken = new AccessToken(
             md5(random_bytes(32)),
@@ -66,7 +68,7 @@ class CreateUserCommand extends Command
 
         list($project, $projectAccessToken) = $this->createProject($user);
 
-        $this->entityManager->flush();
+
 
         $userData = [];
         $userData['user_id'] = $user->getId();
