@@ -68,7 +68,7 @@ class CreateUserCommand extends Command
 
         list($project, $projectAccessToken) = $this->createProject($user);
 
-
+        $this->entityManager->flush();
 
         $userData = [];
         $userData['user_id'] = $user->getId();
