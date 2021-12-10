@@ -7,7 +7,7 @@
     "ext-curl": "*",
     "ext-iconv": "*",
     "ext-json": "*",
-    "doctrine/orm": "2.7.6||2.9.5.*",
+    "doctrine/orm": "2.7.6||2.10.3.*",
     "doctrine/persistence": "^2.2",
     "doctrine/annotations": "^1.13",
     "doctrine/doctrine-bundle": "^2.3",
@@ -20,7 +20,7 @@
     "hshn/base64-encoded-file": "^3.0"
   },
   "require-dev": {
-    "fzaninotto/faker": "^1.9",
+    "fakerphp/faker": "^1.17",
     "phpspec/prophecy-phpunit": "^2.0",
     "phpunit/phpunit": "^9.2.5",
     "symfony/browser-kit": "^5.3",
