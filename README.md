@@ -32,7 +32,7 @@ Problems:
       "repositories": [
         {
           "type": "vcs",
-          "url": "https://github.com/alecszaharia/brizy-entities.git"
+          "url": "https://github.com/bagrinsergiu/brizy-entities.git"
         }
       ]
     }
