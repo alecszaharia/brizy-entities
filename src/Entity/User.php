@@ -87,7 +87,7 @@ class User implements UserInterface
 
     /**
      * @var array
-     * @ORM\Column(name="products", type="json_array", nullable=true)
+     * @ORM\Column(name="products", type="json", nullable=true)
      */
     protected $products;
 
