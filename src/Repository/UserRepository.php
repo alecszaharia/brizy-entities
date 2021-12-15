@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Brizy\Bundle\EntitiesBundle\Repository;
 
 use Brizy\Bundle\EntitiesBundle\Entity\User;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
@@ -57,7 +57,7 @@ class UserRepository extends EntityRepository
                 'WITH',
                 'at.identifier=:identifier'
             )
-            ->setParameter('identifier', $identifier, Type::STRING)
+            ->setParameter('identifier', $identifier, Types::STRING)
             ->where('u.cms_api_client = at.client')
             ->getQuery()
             ->getOneOrNullResult(AbstractQuery::HYDRATE_OBJECT);
