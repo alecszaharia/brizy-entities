@@ -10,10 +10,15 @@ use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 class ApplicationFactory implements FactoryInterface
 {
     public const DEFAULT_SCOPE = 'user';
+
     public const NAME = 'name';
+
     public const API_KEY = 'api_key';
+
     public const SECRET = 'secret';
+
     public const CLIENT_ID = 'cliend_id';
+
     public const SCOPE = 'scope';
 
     public static function create(TestContainerInterface $container, array $params = []): Application

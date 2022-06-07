@@ -9,17 +9,14 @@ use Brizy\Bundle\EntitiesBundle\Repository\MetafieldTextRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
-/**
- * @ORM\Table(name="metafield__text", uniqueConstraints={@UniqueConstraint(columns={"entity_id","metafield_id"})})
- * @ORM\Entity(repositoryClass=MetafieldTextRepository::class)
- */
+#[ORM\Table(name: 'metafield__text', uniqueConstraints: [new UniqueConstraint(columns: ['entity_id', 'metafield_id'])])]
+#[ORM\Entity(repositoryClass: MetafieldTextRepository::class)]
 class MetafieldText extends MetafieldBase
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="value", type="text" )
      */
+    #[ORM\Column(name: 'value', type: 'text')]
     protected $value;
 
     /**

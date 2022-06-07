@@ -11,6 +11,7 @@ use Faker\Generator as Faker;
 class TestContainer implements TestContainerInterface
 {
     private ObjectManager $manager;
+
     private Faker $faker;
 
     /**

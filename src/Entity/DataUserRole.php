@@ -4,78 +4,70 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Entity;
 
+use Brizy\Bundle\EntitiesBundle\Repository\DataUserRoleRepository;
 use Brizy\Bundle\EntitiesBundle\Utils\Random;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="data_user_role", uniqueConstraints={@UniqueConstraint(columns={"data_id","user_id","role_uid"})})
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\DataUserRoleRepository")
- */
+#[ORM\Table(name: 'data_user_role', uniqueConstraints: [new UniqueConstraint(columns: ['data_id', 'user_id', 'role_uid'])])]
+#[ORM\Entity(repositoryClass: DataUserRoleRepository::class)]
 class DataUserRole
 {
     use TimestampableEntity;
 
-    const STATUS_APPROVED = 1;
-    const STATUS_PENDING = 2;
+    final public const STATUS_APPROVED = 1;
+
+    final public const STATUS_PENDING = 2;
 
     /**
      * The unique numeric identifier for the Project
-     *
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
     /**
      * @var Data
-     *
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Data")
-     * @ORM\JoinColumn(name="data_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     * @Assert\NotBlank
      */
+    #[Assert\NotBlank]
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Data::class)]
+    #[ORM\JoinColumn(name: 'data_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     protected $data;
 
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\User", inversedBy="dataUserRoles")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\User::class, inversedBy: 'dataUserRoles')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $user;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="role_uid", type="string")
-     * @Assert\NotBlank
      */
+    #[Assert\NotBlank]
+    #[ORM\Column(name: 'role_uid', type: 'string')]
     protected $role_uid;
 
     /**
      * @var int
-     * @Assert\Choice(callback="getValidStatuses", strict=true)
-     * @ORM\Column(name="status", type="integer", nullable=true)
      */
+    #[Assert\Choice(callback: 'getValidStatuses', strict: true)]
+    #[ORM\Column(name: 'status', type: 'integer', nullable: true)]
     protected $status = self::STATUS_PENDING;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="token", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'token', type: 'string', nullable: true)]
     protected $token;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="timestamp", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'timestamp', type: 'integer', nullable: true)]
     protected $timestamp;
 
     public function __construct()

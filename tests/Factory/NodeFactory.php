@@ -10,7 +10,9 @@ use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 class NodeFactory implements FactoryInterface
 {
     public const NAME = 'name';
+
     public const SLUG = 'slug';
+
     public const CLASS_NAME = 'class_name';
 
     public static function create(TestContainerInterface $container, array $params = [])

@@ -32,7 +32,7 @@ final class BrizyEntitiesBundle extends Bundle
     private function configureDoctrineExtension(ContainerBuilder $container): void
     {
         $namespaces = ['Brizy\Bundle\EntitiesBundle\Entity'];
-        $directories = [realpath(__DIR__ . '/Entity')];
+        $directories = [realpath(__DIR__.'/Entity')];
         $managerParameters = [BrizyEntitiesBundleExtension::DOCTRINE_MANAGER];
         $enabledParameter = BrizyEntitiesBundleExtension::DOCTRINE_MAPPING;
         $aliasMap = ['BrizyEntitiesBundle' => 'Brizy\Bundle\EntitiesBundle\Entity'];
@@ -44,7 +44,7 @@ final class BrizyEntitiesBundle extends Bundle
                 $managerParameters,
                 $enabledParameter,
                 $aliasMap
-            )
+            ), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0
         );
     }
 }

@@ -10,9 +10,13 @@ use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 class MetaFieldFactory implements FactoryInterface
 {
     public const NAME = 'name';
+
     public const TYPE = 'type';
+
     public const PROJECT = 'project';
+
     public const VALUE = 'value';
+
     public const WITHOUT_VALUE = 'withoutValue';
 
     public static function create(TestContainerInterface $container, array $params = [])

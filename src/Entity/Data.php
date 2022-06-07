@@ -16,111 +16,104 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(
- *     name="data",
- *     indexes={
- *          @ORM\Index(name="node_author", columns={"node_id", "author_id"}),
- *          @ORM\Index(name="node_body_ref", columns={"node_id", "body_ref"}),
- *          @ORM\Index(name="node_title", columns={"node_id", "title"}),
- *          @ORM\Index(name="node_title_status", columns={"node_id", "title", "status"})
- *  }
- * )
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\DataRepository")
- * @UniqueEntity("uid")
  * @Gedmo\Loggable(logEntryClass="Brizy\Bundle\EntitiesBundle\Entity\Revision")
  */
+#[UniqueEntity('uid')]
+#[ORM\Table(name: 'data', indexes: [
+    new ORM\Index(name: 'node_author', columns: ['node_id', 'author_id']),
+    new ORM\Index(name: 'node_body_ref', columns: ['node_id', 'body_ref']),
+    new ORM\Index(name: 'node_title', columns: ['node_id', 'title']),
+    new ORM\Index(name: 'node_title_status', columns: ['node_id', 'title', 'status']),
+])]
+#[ORM\Entity(repositoryClass: \Brizy\Bundle\EntitiesBundle\Repository\DataRepository::class)]
 class Data
 {
     use TimestampableEntity;
     use MetafieldableEntity;
     use NodeableEntity;
 
-    public const NODE_STATUS_PUBLISH = 'publish';
+    final public const NODE_STATUS_PUBLISH = 'publish';
 
-    public const DEFAULT_LANGUAGE = 'en';
+    final public const DEFAULT_LANGUAGE = 'en';
 
     /**
      * The unique numeric identifier for the Node
-     *
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
     /**
      * @var string
-     * @ORM\Column(name="uid", type="string", nullable=false, unique=true, options={"collation":"utf8_bin"})
      */
+    #[ORM\Column(name: 'uid', type: 'string', nullable: false, unique: true, options: ['collation' => 'utf8_bin'])]
     protected $uid;
 
     /**
      * @var string
-     * @ORM\Column(name="hash_id", type="string", nullable=true, unique=false, options={"collation":"utf8_bin"})
      */
+    #[ORM\Column(name: 'hash_id', type: 'string', nullable: true, unique: false, options: ['collation' => 'utf8_bin'])]
     protected $hash_id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Data", mappedBy="parent", fetch="LAZY", cascade={"remove", "persist"})
-     **/
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Data::class, cascade: [
+        'remove',
+        'persist',
+    ], fetch: 'LAZY')]
     protected $children;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Data", inversedBy="children", fetch="LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
-     **/
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Data::class, inversedBy: 'children', fetch: 'LAZY', cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: true)]
     protected $parent;
 
     /**
      * @var string
      *
      * @Gedmo\Versioned
-     * @ORM\Column(name="lang_code", type="string", length=2, options={"default" = "en"})
-     * @Assert\Choice(callback="getValidLangCodes", strict=true)
      */
+    #[Assert\Choice(callback: 'getValidLangCodes', strict: true)]
+    #[ORM\Column(name: 'lang_code', type: 'string', length: 2, options: ['default' => 'en'])]
     protected $lang_code = self::DEFAULT_LANGUAGE;
 
     /**
      * @var int
      * @Gedmo\Versioned
-     * @ORM\Column(name="status", type="string", length=20, nullable=true)
      */
+    #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: true)]
     protected $status;
 
     /**
      * @var string
      * @Gedmo\Versioned
-     * @ORM\Column(name="title", type="string", nullable=true, options={"collation":"utf8_bin"})
      */
+    #[ORM\Column(name: 'title', type: 'string', nullable: true, options: ['collation' => 'utf8_bin'])]
     protected $title;
 
     /**
      * @var string
      * @Gedmo\Versioned
-     * @ORM\Column(name="slug", type="string", nullable=true, options={"collation":"utf8_bin"})
      */
+    #[ORM\Column(name: 'slug', type: 'string', nullable: true, options: ['collation' => 'utf8_bin'])]
     protected $slug;
 
     /**
      * @var string
      * @Gedmo\Versioned
-     * @ORM\Column(name="body", type="text", nullable=true, options={"collation":"utf8mb4_0900_ai_ci"})
      */
+    #[ORM\Column(name: 'body', type: 'text', nullable: true, options: ['collation' => 'utf8mb4_0900_ai_ci'])]
     protected $body;
 
     /**
      * @var string
      * @Gedmo\Versioned
-     * @ORM\Column(name="body_ref", type="string", nullable=true, options={"collation":"utf8_bin"})
      */
+    #[ORM\Column(name: 'body_ref', type: 'string', nullable: true, options: ['collation' => 'utf8_bin'])]
     protected $body_ref;
 
     /**
      * @var int
-     * @ORM\Column(name="author_id", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'author_id', type: 'integer', nullable: true)]
     protected $author_id;
 
     /**
@@ -141,8 +134,8 @@ class Data
 
     /**
      * @var string
-     * @ORM\Column(name="version", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'version', type: 'string', nullable: true)]
     protected $version;
 
     /**

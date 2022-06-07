@@ -9,17 +9,14 @@ use Brizy\Bundle\EntitiesBundle\Repository\MetafieldVarcharRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
-/**
- * @ORM\Table(name="metafield__varchar", uniqueConstraints={@UniqueConstraint(columns={"entity_id","metafield_id"})})
- * @ORM\Entity(repositoryClass=MetafieldVarcharRepository::class)
- */
+#[ORM\Table(name: 'metafield__varchar', uniqueConstraints: [new UniqueConstraint(columns: ['entity_id', 'metafield_id'])])]
+#[ORM\Entity(repositoryClass: MetafieldVarcharRepository::class)]
 class MetafieldVarchar extends MetafieldBase
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="value", type="string" )
      */
+    #[ORM\Column(name: 'value', type: 'string')]
     protected $value;
 
     /**

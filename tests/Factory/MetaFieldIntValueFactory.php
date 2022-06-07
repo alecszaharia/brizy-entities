@@ -11,7 +11,9 @@ use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 class MetaFieldIntValueFactory implements FactoryInterface
 {
     public const METAFIELD = 'metafield';
+
     public const PROJECT = 'project';
+
     public const VALUE = 'value';
 
     public static function create(TestContainerInterface $container, array $params = [])

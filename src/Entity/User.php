@@ -15,103 +15,92 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Trikoder\Bundle\OAuth2Bundle\Model\Client;
 
-/**
- * @ORM\Table(name="user", uniqueConstraints={@UniqueConstraint(columns={"application_id","user_remote_id"})})
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\UserRepository")
- */
+#[ORM\Table(name: 'user', uniqueConstraints: [new UniqueConstraint(columns: ['application_id', 'user_remote_id'])])]
+#[ORM\Entity(repositoryClass: \Brizy\Bundle\EntitiesBundle\Repository\UserRepository::class)]
 class User implements UserInterface
 {
     use TimestampableEntity;
     use NodeableEntity;
     use MetafieldableEntity;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var Application
-     *
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Application", cascade={"persist"})
-     * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=true)
      */
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Application::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'application_id', referencedColumnName: 'id', nullable: true)]
     protected $application;
 
     /**
      * OAuth Client to access the CmsApplication api
      *
      * @var Client
-     *
-     * @ORM\ManyToOne(targetEntity="Trikoder\Bundle\OAuth2Bundle\Model\Client",cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="cms_api_client_id", referencedColumnName="identifier", nullable=true)
      */
+    #[ORM\ManyToOne(targetEntity: \Trikoder\Bundle\OAuth2Bundle\Model\Client::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'cms_api_client_id', referencedColumnName: 'identifier', nullable: true)]
     protected $cms_api_client;
 
     /**
      * @var int
-     * @Assert\NotBlank
-     * @Assert\Range(
-     *      min = 1,
-     *      max = 2147483647
-     * )
-     * @ORM\Column(name="user_remote_id", type="integer")
      */
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1, max: 2_147_483_647)]
+    #[ORM\Column(name: 'user_remote_id', type: 'integer')]
     protected $user_remote_id;
 
     /**
      * @var string
-     * @ORM\Column(name="token", type="string")
      */
+    #[ORM\Column(name: 'token', type: 'string')]
     protected $token;
 
     /**
      * @var string
-     * @ORM\Column(name="fingerprint", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'fingerprint', type: 'string', nullable: true)]
     protected $fingerprint;
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'deleted_at', type: 'datetime', nullable: true)]
     protected $deleted_at;
 
     /**
      * @var bool
-     * @ORM\Column(name="outdated", type="boolean")
      */
+    #[ORM\Column(name: 'outdated', type: 'boolean')]
     protected $outdated = false;
 
     /**
      * @var array
-     * @ORM\Column(name="products", type="json", nullable=true)
      */
+    #[ORM\Column(name: 'products', type: 'json', nullable: true)]
     protected $products;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\DataUserRole", mappedBy="user", fetch="EXTRA_LAZY", cascade={"remove"})
-     **/
+    #[ORM\OneToMany(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\DataUserRole::class, mappedBy: 'user', fetch: 'EXTRA_LAZY', cascade: ['remove'])]
     protected $dataUserRoles;
 
     /**
      * @var bool
-     * @ORM\Column(name="locked", type="boolean", options={"default": false})
      */
+    #[ORM\Column(name: 'locked', type: 'boolean', options: ['default' => false])]
     protected $locked = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="approved", type="boolean", options={"default": false})
      */
+    #[ORM\Column(name: 'approved', type: 'boolean', options: ['default' => false])]
     protected $approved = false;
 
     /**
      * @var string
-     * @ORM\Column(name="status", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'status', type: 'string', nullable: true)]
     protected $status;
 
     public function __construct()
@@ -154,9 +143,6 @@ class User implements UserInterface
         return $this->cms_api_client;
     }
 
-    /**
-     * @param ?Client $cms_api_client
-     */
     public function setCmsApiClient(?Client $cms_api_client): User
     {
         $this->cms_api_client = $cms_api_client;
@@ -276,8 +262,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param array $products
-     *
      * @return $this
      */
     public function setProducts(array $products = null)
@@ -419,7 +403,8 @@ class User implements UserInterface
         return null;
     }
 
-    public function getUserIdentifier() {
+    public function getUserIdentifier()
+    {
         return $this->getId();
     }
 

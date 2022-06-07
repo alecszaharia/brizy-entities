@@ -11,10 +11,9 @@ trait NodeableEntity
 {
     /**
      * @var Node
-     *
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Node", fetch="EAGER")
-     * @ORM\JoinColumn(name="node_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Node::class, fetch: 'EAGER')]
+    #[ORM\JoinColumn(name: 'node_id', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
     protected $node;
 
     /**

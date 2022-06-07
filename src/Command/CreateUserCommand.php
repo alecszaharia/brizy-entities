@@ -45,7 +45,7 @@ class CreateUserCommand extends Command
 
         $user = new User();
         $user->setApplication($this->createApplication());
-        $user->setUserRemoteId(rand(1, 999));
+        $user->setUserRemoteId(random_int(1, 999));
         $user->setNode($this->createNode(['slug' => 'user', 'name' => 'User', 'class' => User::class]));
         $user->setCreatedAt(new \DateTime());
         $user->setUpdatedAt(new \DateTime());
@@ -66,7 +66,7 @@ class CreateUserCommand extends Command
 
         $this->entityManager->persist($accessToken);
 
-        list($project, $projectAccessToken) = $this->createProject($user);
+        [$project, $projectAccessToken] = $this->createProject($user);
 
         $this->entityManager->flush();
 
@@ -139,7 +139,7 @@ class CreateUserCommand extends Command
     protected function createApplication()
     {
         $application = new Application();
-        $application->setName('AppName'.rand(1, 1000));
+        $application->setName('AppName'.random_int(1, 1000));
         $application->setScope('user');
         $application->setApiKey('asdasdasdasd');
         $application->setSecret('asdasdasdasd');

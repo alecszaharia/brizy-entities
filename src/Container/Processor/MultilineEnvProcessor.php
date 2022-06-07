@@ -22,7 +22,7 @@ class MultilineEnvProcessor implements EnvVarProcessorInterface
      */
     public function getEnv($prefix, $name, \Closure $getEnv)
     {
-        return str_replace(["\n", '\n'], "\n", $getEnv($name));
+        return str_replace(["\n", '\n'], "\n", (string) $getEnv($name));
     }
 
     /**

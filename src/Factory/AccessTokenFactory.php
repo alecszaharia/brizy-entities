@@ -16,12 +16,17 @@ use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
 
 class AccessTokenFactory
 {
-    public const PROJECT = 'project';
-    public const USER = 'user';
-    public const CLIENT = 'client_id';
-    public const SCOPES = 'scopes';
-    public const EXPIRE_DATE = 'expire';
-    public const IDENTIFIER = 'identifier';
+    final public const PROJECT = 'project';
+
+    final public const USER = 'user';
+
+    final public const CLIENT = 'client_id';
+
+    final public const SCOPES = 'scopes';
+
+    final public const EXPIRE_DATE = 'expire';
+
+    final public const IDENTIFIER = 'identifier';
 
     /**
      * @return AccessToken
@@ -108,7 +113,7 @@ class AccessTokenFactory
         /**
          * This is for the case when the OAUTH2_XXXX_KEY_PATH keys are set as key constant not paths to files.
          */
-        $keyPath = str_replace(["\n", '\n'], "\n", $keyPath);
+        $keyPath = str_replace(["\n", '\n'], "\n", (string) $keyPath);
 
         $accessTokenEntity = new AccessTokenEntity();
         $accessTokenEntity->setPrivateKey(new CryptKey($keyPath, null, false));

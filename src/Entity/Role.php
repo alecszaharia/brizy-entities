@@ -8,62 +8,57 @@ use Brizy\Bundle\EntitiesBundle\Entity\Common\Traits\NodeableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-/**
- * @ORM\Table(name="role")
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\RoleRepository")
- */
+#[ORM\Table(name: 'role')]
+#[ORM\Entity(repositoryClass: \Brizy\Bundle\EntitiesBundle\Repository\RoleRepository::class)]
 class Role
 {
     use TimestampableEntity;
     use NodeableEntity;
 
-    const DEFAULT_NAME = 'Admin';
+    final public const DEFAULT_NAME = 'Admin';
 
     /**
      * The unique numeric identifier for the Role
-     *
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string")
      */
+    #[ORM\Column(name: 'name', type: 'string')]
     protected $name = self::DEFAULT_NAME;
 
     /**
      * @var string
-     * @ORM\Column(name="uid", type="string")
      */
+    #[ORM\Column(name: 'uid', type: 'string')]
     protected $uid;
 
     /**
      * @var bool
-     * @ORM\Column(name="create_action", type="boolean")
      */
+    #[ORM\Column(name: 'create_action', type: 'boolean')]
     protected $create_action;
 
     /**
      * @var bool
-     * @ORM\Column(name="read_action", type="boolean")
      */
+    #[ORM\Column(name: 'read_action', type: 'boolean')]
     protected $read_action;
 
     /**
      * @var bool
-     * @ORM\Column(name="update_action", type="boolean")
      */
+    #[ORM\Column(name: 'update_action', type: 'boolean')]
     protected $update_action;
 
     /**
      * @var bool
-     * @ORM\Column(name="delete_action", type="boolean")
      */
+    #[ORM\Column(name: 'delete_action', type: 'boolean')]
     protected $delete_action;
 
     /**

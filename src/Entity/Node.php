@@ -10,69 +10,60 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="node")
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\NodeRepository")
- */
+#[ORM\Table(name: 'node')]
+#[ORM\Entity(repositoryClass: \Brizy\Bundle\EntitiesBundle\Repository\NodeRepository::class)]
 class Node
 {
     use TimestampableEntity;
 
-    const DEFAULT_ENTITY_CLASS_USER = User::class;
+    final public const DEFAULT_ENTITY_CLASS_USER = User::class;
 
     /**
      * The unique numeric identifier for the Node
-     *
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Node", mappedBy="parent", fetch="LAZY")
-     **/
+    #[ORM\OneToMany(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Node::class, mappedBy: 'parent', fetch: 'LAZY')]
     protected $children;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Node", inversedBy="children", fetch="LAZY")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
-     **/
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Node::class, inversedBy: 'children', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
     protected $parent;
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string")
-     * @Assert\NotBlank
      */
+    #[Assert\NotBlank]
+    #[ORM\Column(name: 'name', type: 'string')]
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(name="slug", type="string")
      * @Gedmo\Slug(fields={"name"},unique=false)
      */
+    #[ORM\Column(name: 'slug', type: 'string')]
     protected $slug;
 
     /**
      * @var string
-     * @ORM\Column(name="entity_class", type="string")
-     * @Assert\NotBlank
      */
+    #[Assert\NotBlank]
+    #[ORM\Column(name: 'entity_class', type: 'string')]
     protected $entity_class;
 
     /**
      * @var string
-     * @ORM\Column(name="default_role_uid", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'default_role_uid', type: 'string', nullable: true)]
     protected $default_role_uid;
 
     /**
      * @var bool
-     * @ORM\Column(name="is_file", type="boolean")
      */
+    #[ORM\Column(name: 'is_file', type: 'boolean')]
     protected $is_file = false;
 
     /**

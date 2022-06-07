@@ -9,10 +9,8 @@ use Brizy\Bundle\EntitiesBundle\Repository\MetafieldIntRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
-/**
- * @ORM\Table(name="metafield__int", uniqueConstraints={@UniqueConstraint(columns={"entity_id","metafield_id"})})
- * @ORM\Entity(repositoryClass=MetafieldIntRepository::class)
- */
+#[ORM\Table(name: 'metafield__int', uniqueConstraints: [new UniqueConstraint(columns: ['entity_id', 'metafield_id'])])]
+#[ORM\Entity(repositoryClass: MetafieldIntRepository::class)]
 class MetafieldInt extends MetafieldBase
 {
     /**
@@ -25,8 +23,6 @@ class MetafieldInt extends MetafieldBase
 
     /**
      * @param $value
-     *
-     * @return $this
      */
     public function setValue($value): MetafieldInt
     {
@@ -34,5 +30,4 @@ class MetafieldInt extends MetafieldBase
 
         return $this;
     }
-
 }

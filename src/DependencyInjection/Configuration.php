@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\DependencyInjection;
 
@@ -72,5 +73,4 @@ final class Configuration implements ConfigurationInterface
 
         return $node;
     }
-
 }

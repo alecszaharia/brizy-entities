@@ -4,60 +4,34 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Entity;
 
+use Brizy\Bundle\EntitiesBundle\Repository\ProjectAccessTokenMapRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;
 
-/**
- * @ORM\Table(name="project_access_token")
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\ProjectAccessTokenMapRepository")
- */
+#[ORM\Table(name: 'project_access_token')]
+#[ORM\Entity(repositoryClass: ProjectAccessTokenMapRepository::class)]
 class ProjectAccessTokenMap
 {
     use TimestampableEntity;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    #[ORM\ManyToOne(targetEntity: Data::class)]
+    #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    protected Data $project;
 
-    public function setId(?int $id)
-    {
-        $this->id = $id;
+    private ?AccessToken $token = null;
 
-        return $this;
-    }
-
-    /**
-     * @var AccessToken
-     *
-     * @ORM\ManyToOne(targetEntity="Trikoder\Bundle\OAuth2Bundle\Model\AccessToken")
-     * @ORM\JoinColumn(name="access_token_id", referencedColumnName="identifier", nullable=true, onDelete="CASCADE")
-     */
     protected $accessToken = null;
 
-    /**
-     * @var Data
-     *
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Data")
-     * @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
-     */
-    protected $project = null;
-
-    /**
-     * ProjectAccessTokenMap constructor.
-     */
-    public function __construct(Data $project = null, AccessToken $token = null)
+    public function __construct(Data $project = null, ?AccessToken $token = null)
     {
-        $this->accessToken = $token;
         $this->project = $project;
+        $this->token = $token;
     }
 
     /**
@@ -86,6 +60,18 @@ class ProjectAccessTokenMap
     public function setProject(Data $project): ProjectAccessTokenMap
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id)
+    {
+        $this->id = $id;
 
         return $this;
     }

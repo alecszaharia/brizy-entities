@@ -10,6 +10,7 @@ use Brizy\Bundle\EntitiesBundle\Tests\TestContainerInterface;
 class DataFactory implements FactoryInterface
 {
     public const AUTHOR = 'author';
+
     public const NODE = 'node';
 
     public static function create(TestContainerInterface $container, array $params = [])

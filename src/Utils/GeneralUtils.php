@@ -19,7 +19,7 @@ class GeneralUtils
         $charRange = strlen($chars) - 1;
         $key = '';
         for ($i = 0; $i < 16; ++$i) {
-            $key .= $chars[mt_rand(0, $charRange)];
+            $key .= $chars[random_int(0, $charRange)];
         }
 
         return base64_encode($key);
@@ -39,7 +39,7 @@ class GeneralUtils
 
     public static function getUniqueHash()
     {
-        return md5(uniqid((string) mt_rand(), true));
+        return md5(uniqid((string) random_int(0, mt_getrandmax()), true));
     }
 
     public static function isJson($string)

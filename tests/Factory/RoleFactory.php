@@ -11,9 +11,13 @@ use Faker\Generator;
 class RoleFactory implements FactoryInterface
 {
     public const NAME = 'name';
+
     public const CREATE = 'create';
+
     public const READ = 'read';
+
     public const UPDATE = 'update';
+
     public const DELETE = 'delete';
 
     /**

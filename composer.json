@@ -2,18 +2,18 @@
   "name": "bagrinsergiu/brizy-entities",
   "type": "symfony-bundle",
   "require": {
-    "php": "7.4.*||8.*",
+    "php": "8.*",
     "ext-ctype": "*",
     "ext-curl": "*",
     "ext-iconv": "*",
     "ext-json": "*",
-    "doctrine/orm": "2.7.6||2.10.3.*",
+    "doctrine/orm": "2.12.2.*",
     "doctrine/persistence": "^2.2",
     "doctrine/annotations": "^1.13",
-    "doctrine/doctrine-bundle": "^2.3",
-    "symfony/framework-bundle": "^5.3",
-    "symfony/yaml": "^5.3",
-    "symfony/validator": "^5.3",
+    "doctrine/doctrine-bundle": "^2.4",
+    "symfony/framework-bundle": "^5.4",
+    "symfony/yaml": "^5.4",
+    "symfony/validator": "^5.4",
     "trikoder/oauth2-bundle": "^3.2",
     "gedmo/doctrine-extensions": "^3.0.4",
     "nyholm/psr7": "^1.4",
@@ -23,11 +23,12 @@
     "fakerphp/faker": "^1.17",
     "phpspec/prophecy-phpunit": "^2.0",
     "phpunit/phpunit": "^9.2.5",
-    "symfony/browser-kit": "^5.3",
-    "symfony/css-selector": "^5.3",
+    "symfony/browser-kit": "^5.4",
+    "symfony/css-selector": "^5.4",
     "symfony/maker-bundle": "^1.14",
-    "symfony/phpunit-bridge": "^5.3",
-    "symfony/profiler-pack": "^1.0"
+    "symfony/phpunit-bridge": "^5.4",
+    "symfony/profiler-pack": "^1.0",
+    "rector/rector": "^0.13.4"
   },
   "autoload": {
     "psr-4": {
@@ -54,10 +55,6 @@
     {
       "type": "vcs",
       "url": "https://github.com/bagrinsergiu/doctrine-orm.git"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/alecszaharia/pre-commit-php-cs.git"
     }
   ]
 }

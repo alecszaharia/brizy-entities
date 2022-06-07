@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brizy\Bundle\EntitiesBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\FileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-
 
 class BrizyEntitiesBundleExtension extends Extension implements PrependExtensionInterface
 {
-    const ALIAS_NAME = 'brizy_entities';
-    const DOCTRINE_MAPPING = 'brizy_entities.persistence.doctrine.mapping';
-    const DOCTRINE_MANAGER = 'brizy_entities.persistence.doctrine.entity_manager';
+    final public const ALIAS_NAME = 'brizy_entities';
+
+    final public const DOCTRINE_MAPPING = 'brizy_entities.persistence.doctrine.mapping';
+
+    final public const DOCTRINE_MANAGER = 'brizy_entities.persistence.doctrine.entity_manager';
 
     public function getAlias()
     {
@@ -35,7 +36,7 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
         $mainConfig = $container->getExtensionConfig($this->getAlias());
 
         foreach ($container->getExtensions() as $name => $extension) {
-            if ($name === 'trikoder_oauth2') {
+            if ('trikoder_oauth2' === $name) {
                 $trikoderConfig = $container->getExtensionConfig($name);
                 $this->prependTrikoderConfiguration($container, $mainConfig[0], $trikoderConfig[0]);
             }
@@ -45,25 +46,23 @@ class BrizyEntitiesBundleExtension extends Extension implements PrependExtension
     private function prependTrikoderConfiguration(ContainerBuilder $container, $mainConfig, $trikoderConfig)
     {
         $managerName = $mainConfig['persistence']['doctrine']['entity_manager']['name'];
-        $scopes      = $mainConfig['persistence']['oauth2']['scopes'];
+        $scopes = $mainConfig['persistence']['oauth2']['scopes'];
         $container->setParameter(self::DOCTRINE_MAPPING, true);
         $container->setParameter(self::DOCTRINE_MANAGER, $managerName);
 
         $trikoderConfig = [
-            'authorization_server' =>
-                [
-                    'private_key'            => '%env(multiline:resolve:OAUTH2_PRIVATE_KEY_PATH)%',
-                    'private_key_passphrase' => '%env(OAUTH2_KEY_PASSPHRASE)%',
-                    'encryption_key'         => '%env(OAUTH2_ENCRYPTION_KEY)%',
-                    'access_token_ttl'       => '%env(OAUTH2_ACCESS_TOKEN_TTL)%',
-                    'refresh_token_ttl'      => '%env(OAUTH2_REFRESH_TOKEN_TTL)%',
-                ],
-            'resource_server'      => ['public_key' => '%env(multiline:resolve:OAUTH2_PUBLIC_KEY_PATH)%'],
-            'scopes'               => $scopes,
-            'persistence'          => ['doctrine' => ['entity_manager' => $managerName]],
+            'authorization_server' => [
+                'private_key' => '%env(multiline:resolve:OAUTH2_PRIVATE_KEY_PATH)%',
+                'private_key_passphrase' => '%env(OAUTH2_KEY_PASSPHRASE)%',
+                'encryption_key' => '%env(OAUTH2_ENCRYPTION_KEY)%',
+                'access_token_ttl' => '%env(OAUTH2_ACCESS_TOKEN_TTL)%',
+                'refresh_token_ttl' => '%env(OAUTH2_REFRESH_TOKEN_TTL)%',
+            ],
+            'resource_server' => ['public_key' => '%env(multiline:resolve:OAUTH2_PUBLIC_KEY_PATH)%'],
+            'scopes' => $scopes,
+            'persistence' => ['doctrine' => ['entity_manager' => $managerName]],
         ];
 
         $container->prependExtensionConfig('trikoder_oauth2', $trikoderConfig);
     }
-
 }

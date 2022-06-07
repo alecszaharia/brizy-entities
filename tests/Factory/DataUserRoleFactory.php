@@ -12,8 +12,11 @@ use Faker\Generator;
 class DataUserRoleFactory implements FactoryInterface
 {
     public const USER = 'user';
+
     public const CONTAINER = 'container';
+
     public const ROLE_UID = 'role_uid';
+
     public const STATUS = 'status';
 
     /**

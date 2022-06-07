@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Entity;
 
-use Brizy\Bundle\EntitiesBundle\Repository\MetafieldRepository;
 use Brizy\Bundle\EntitiesBundle\Entity\Common\Traits\NodeableEntity;
+use Brizy\Bundle\EntitiesBundle\Repository\MetafieldRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-/**
- * @ORM\Table(name="metafield", uniqueConstraints={@UniqueConstraint(columns={"node_id","name"})})
- * @ORM\Entity(repositoryClass=MetafieldRepository::class)
- */
+#[ORM\Table(name: 'metafield', uniqueConstraints: [new UniqueConstraint(columns: ['node_id', 'name'])])]
+#[ORM\Entity(repositoryClass: MetafieldRepository::class)]
 class Metafield
 {
     use TimestampableEntity;
     use NodeableEntity;
 
-    public const TYPE_VARCHAR = 'varchar';
-    public const TYPE_INT = 'int';
-    public const TYPE_TEXT = 'text';
-    public const TYPES = [
+    final public const TYPE_VARCHAR = 'varchar';
+
+    final public const TYPE_INT = 'int';
+
+    final public const TYPE_TEXT = 'text';
+
+    final public const TYPES = [
         self::TYPE_INT,
         self::TYPE_TEXT,
         self::TYPE_VARCHAR,
@@ -30,27 +31,24 @@ class Metafield
 
     /**
      * The unique numeric identifier for the Node
-     *
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string")
      */
+    #[ORM\Column(name: 'name', type: 'string')]
     protected $name;
+
     /**
      * @var string
-     * @ORM\Column(name="type", type="string", options={"default" = "int"} )
      */
+    #[ORM\Column(name: 'type', type: 'string', options: ['default' => 'int'])]
     protected $type = self::TYPE_INT;
-    
+
     /**
      * @var string
      */
@@ -64,13 +62,10 @@ class Metafield
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return Metafield
-     */
     public function setId(int $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 

@@ -4,65 +4,58 @@ declare(strict_types=1);
 
 namespace Brizy\Bundle\EntitiesBundle\Entity;
 
+use Brizy\Bundle\EntitiesBundle\Repository\ApplicationRepository;
 use Brizy\Bundle\EntitiesBundle\Utils\Random;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-/**
- * @ORM\Table(name="application")
- * @ORM\Entity(repositoryClass="Brizy\Bundle\EntitiesBundle\Repository\ApplicationRepository")
- */
+#[ORM\Table(name: 'application')]
+#[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 class Application
 {
     use TimestampableEntity;
 
-    const SCOPE_AUTH = 'user_auth';
-    const SCOPE_SUPER_ADMIN = 'super_admin';
+    final public const SCOPE_AUTH = 'user_auth';
+
+    final public const SCOPE_SUPER_ADMIN = 'super_admin';
 
     /**
      * The unique numeric identifier for the Node
-     *
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string")
      */
+    #[ORM\Column(name: 'name', type: 'string')]
     protected $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="api_key", type="string")
      */
+    #[ORM\Column(name: 'api_key', type: 'string')]
     protected $api_key;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="secret", type="string")
      */
+    #[ORM\Column(name: 'secret', type: 'string')]
     protected $secret;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="client_id", type="string")
      */
+    #[ORM\Column(name: 'client_id', type: 'string')]
     protected $client_id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="scope", type="string")
      */
+    #[ORM\Column(name: 'scope', type: 'string')]
     protected $scope;
 
     /**

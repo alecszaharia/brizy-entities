@@ -19,6 +19,10 @@ return (new PhpCsFixer\Config())
         'no_unneeded_curly_braces' => false,
         'phpdoc_summary' => false,
         'declare_strict_types' => true,
+        'array_indentation' => true,
+        'fully_qualified_strict_types' => true,
+        'class_definition'=> true,
+        'class_attributes_separation'=> true
     ])
     ->setFinder($finder)
 ;

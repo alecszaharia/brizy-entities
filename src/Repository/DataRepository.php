@@ -8,7 +8,6 @@ use Brizy\Bundle\EntitiesBundle\Entity\Data;
 use Brizy\Bundle\EntitiesBundle\Entity\DataUserRole;
 use Brizy\Bundle\EntitiesBundle\Entity\Node;
 use Brizy\Bundle\EntitiesBundle\Entity\ProjectAccessTokenMap;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 use Trikoder\Bundle\OAuth2Bundle\Model\AccessToken;

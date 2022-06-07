@@ -17,53 +17,39 @@ abstract class MetafieldBase implements MetaFieldTypeInterface
      * The unique numeric identifier for the Node
      *
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Brizy\Bundle\EntitiesBundle\Entity\Metafield")
-     * @ORM\JoinColumn(name="metafield_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: \Brizy\Bundle\EntitiesBundle\Entity\Metafield::class)]
+    #[ORM\JoinColumn(name: 'metafield_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected Metafield $metafield;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="entity_id", type="integer", unique=false)
      */
+    #[ORM\Column(name: 'entity_id', type: 'integer', unique: false)]
     protected $entity_id;
-
-
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="value", type="integer" )
      */
+    #[ORM\Column(name: 'value', type: 'integer')]
     protected $value;
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return MetafieldInt
-     */
     public function setId(int $id): MetafieldInt
     {
         $this->id = $id;
+
         return $this;
     }
-
 
     public function getMetafield(): Metafield
     {
