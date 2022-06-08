@@ -38,7 +38,7 @@ final class BrizyEntitiesBundle extends Bundle
         $aliasMap = ['BrizyEntitiesBundle' => 'Brizy\Bundle\EntitiesBundle\Entity'];
 
         $container->addCompilerPass(
-            DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+            DoctrineOrmMappingsPass::createAttributeMappingDriver(
                 $namespaces,
                 $directories,
                 $managerParameters,
