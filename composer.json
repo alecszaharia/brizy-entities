@@ -8,15 +8,15 @@
     "ext-iconv": "*",
     "ext-json": "*",
     "doctrine/orm": "2.12.2.*",
-    "doctrine/persistence": "^2.2",
+    "doctrine/persistence": "^2.5",
     "doctrine/annotations": "^1.13",
     "doctrine/doctrine-bundle": "^2.4",
     "symfony/framework-bundle": "^5.4",
     "symfony/yaml": "^5.4",
     "symfony/validator": "^5.4",
     "trikoder/oauth2-bundle": "^3.2",
-    "gedmo/doctrine-extensions": "^3.0.4",
-    "nyholm/psr7": "^1.4",
+    "gedmo/doctrine-extensions": "^3.7",
+    "nyholm/psr7": "^1.5",
     "hshn/base64-encoded-file": "^3.0"
   },
   "require-dev": {
