@@ -33,7 +33,7 @@ class ProjectAccessTokenMap
 
     public function __construct( Data $project = null, ?AccessToken $token = null)
     {
-        $this->token = $token;
+        $this->accessToken = $token;
         $this->project = $project;
     }
 
