@@ -20,18 +20,21 @@ class ProjectAccessTokenMap
     #[ORM\Column(type: 'integer')]
     protected $id;
 
+    /**
+     * @var AccessToken
+     */
+    #[ORM\ManyToOne(targetEntity: AccessToken::class)]
+    #[ORM\JoinColumn(name: 'access_token_id', referencedColumnName: 'identifier', nullable: true, onDelete: 'CASCADE')]
+    protected $accessToken = null;
+
     #[ORM\ManyToOne(targetEntity: Data::class)]
     #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
     protected Data $project;
 
-    private ?AccessToken $token = null;
-
-    protected $accessToken = null;
-
-    public function __construct(Data $project = null, ?AccessToken $token = null)
+    public function __construct( Data $project = null, ?AccessToken $token = null)
     {
-        $this->project = $project;
         $this->token = $token;
+        $this->project = $project;
     }
 
     /**
