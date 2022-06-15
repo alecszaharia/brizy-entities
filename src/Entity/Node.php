@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 #[ORM\Table(name: 'node')]
 #[ORM\Entity(repositoryClass: \Brizy\Bundle\EntitiesBundle\Repository\NodeRepository::class)]
 class Node
