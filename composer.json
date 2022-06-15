@@ -14,7 +14,7 @@
     "symfony/framework-bundle": "^5.4",
     "symfony/yaml": "^5.4",
     "symfony/validator": "^5.4",
-    "trikoder/oauth2-bundle": "^3.2",
+    "trikoder/oauth2-bundle": "^3.2.0.1",
     "gedmo/doctrine-extensions": "^3.7",
     "nyholm/psr7": "^1.5",
     "hshn/base64-encoded-file": "^3.0"
@@ -51,6 +51,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/bagrinsergiu/DoctrineExtensions.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/alecszaharia/oauth2-bundle"
     },
     {
       "type": "vcs",
