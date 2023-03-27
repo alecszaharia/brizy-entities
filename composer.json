@@ -7,7 +7,7 @@
     "ext-curl": "*",
     "ext-iconv": "*",
     "ext-json": "*",
-    "doctrine/orm": "2.12.2.*",
+    "doctrine/orm": "^2.15.0.1",
     "doctrine/persistence": "^2.5",
     "doctrine/annotations": "^1.13",
     "doctrine/doctrine-bundle": "^2.4",
