@@ -7,17 +7,13 @@
     "ext-curl": "*",
     "ext-iconv": "*",
     "ext-json": "*",
-    "doctrine/orm": "^2.15.0.1",
-    "doctrine/persistence": "^2.5",
-    "doctrine/annotations": "^1.13",
-    "doctrine/doctrine-bundle": "^2.4",
-    "symfony/framework-bundle": "^5.4",
-    "symfony/yaml": "^5.4",
-    "symfony/validator": "^5.4",
-    "trikoder/oauth2-bundle": "3.2.0.1",
+    "symfony/framework-bundle": "^5.4|7.0.*",
+    "symfony/yaml": "^5.4|7.0.*",
+    "symfony/validator": "^5.4|7.0.*",
+    "trikoder/oauth2-bundle": "^4.0",
     "gedmo/doctrine-extensions": "^3.7",
-    "nyholm/psr7": "^1.5",
-    "hshn/base64-encoded-file": "^3.0"
+    "nyholm/psr7": "^1.5|1.8.*",
+    "hshn/base64-encoded-file": "^3.0|5.0.*"
   },
   "require-dev": {
     "fakerphp/faker": "^1.17",
@@ -51,14 +47,6 @@
     {
       "type": "vcs",
       "url": "https://github.com/bagrinsergiu/DoctrineExtensions.git"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/alecszaharia/oauth2-bundle"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/bagrinsergiu/doctrine-orm.git"
     }
   ]
 }
